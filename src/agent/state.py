@@ -1,0 +1,8 @@
+from typing import TypedDict, Any
+
+
+class AgentState(TypedDict):
+
+    messages: list[Any]
+    tool_calls: list[dict]
+    tool_results: list[dict]
