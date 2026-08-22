@@ -1,95 +1,74 @@
+
+add kar dena.
+
+Uske baad **README ko aur expand nahi karenge**. No unnecessary sections.
+
+### Final README
+
+```markdown
 # Enterprise AI Agent Platform
 
-A hands-on project for building an AI agent that can understand user requests, decide when a tool is needed, execute the tool, and use the result to generate a response.
+A hands-on project built to understand how an AI agent works in a real application instead of treating an LLM as just a chatbot.
 
-The project is being built step by step to understand how agentic AI systems work behind the scenes rather than relying entirely on ready-made frameworks.
+The agent can understand a user's request, decide when a tool is required, execute the tool, maintain conversation history, and generate a final response. The project also includes persistent storage, Redis caching, an API layer, error handling, logging, automated tests, and Docker-based deployment.
 
-## Current Architecture
+## Features
 
-User
- ↓
-LangGraph Agent
- ↓
-Tool Selection
- ↓
-Tool Execution
- ├── Calculator
- └── Employee Information
- ↓
-Agent
- ↓
-Final Response
+- Natural language interaction through a REST API
+- LLM-powered agent using Google Gemini
+- LangGraph-based agent workflow
+- Tool selection and execution
+- Calculator tool
+- Employee information tool
+- Multi-turn conversations
+- Persistent conversation history
+- Tool-call persistence
+- PostgreSQL database
+- Redis-based conversation caching
+- Request validation
+- Structured application logging
+- API error handling
+- Automated API tests with Pytest
+- Dockerized FastAPI application
+- Docker Compose setup for FastAPI, PostgreSQL, and Redis
 
-## Current Capabilities
+## Architecture
 
-- Gemini LLM integration
-- Function / tool calling
-- Multiple tools
-- Generic tool registry
-- Tool execution
-- LangGraph state management
-- Conditional routing
-- Multi-tool agent workflow
-
-## Tech Stack
-
-- Python
-- Google Gemini API
-- LangGraph
-- LangChain Core
-- Git / GitHub
-
-## Current Status
-
-### Completed
-- Gemini integration
-- Calculator and employee information tools
-- Generic tool registry and executor
-- LangGraph agent workflow
-- Multi-tool execution
-
-### Planned
-- PostgreSQL persistence
-- Redis
-- FastAPI backend
-- Error handling and retries
-- Logging and observability
-- Docker Compose
-- Testing and evaluation
-
-## Project Structure
-
-enterprise-ai-agent-platform/
-├── src/
-│   ├── agent/
-│   ├── tools/
-│   ├── config.py
-│   └── llm.py
-├── test_*.py
-├── requirements.txt
-├── .env.example
-├── .gitignore
-└── README.md
-
-## Running the Project
-
-Create and activate the virtual environment:
-
-python3 -m venv .venv
-source .venv/bin/activate
-
-Install dependencies:
-
-pip install -r requirements.txt
-
-Create a .env file with:
-
-GOOGLE_API_KEY=your_api_key
-
-Run the current agent:
-
-python test_langgraph_agent.py
-
-## About
-
-This project focuses on understanding the engineering behind agentic AI systems, including tool calling, agent state, conditional workflows, and multi-tool execution. The system is being developed incrementally, with each major component tested before moving to the next stage.
+```text
+                         Client
+                           |
+                           v
+                    +--------------+
+                    |   FastAPI    |
+                    +------+-------+
+                           |
+                           v
+                    +--------------+
+                    |  LangGraph   |
+                    |    Agent     |
+                    +------+-------+
+                           |
+                           v
+                    +--------------+
+                    | Gemini LLM   |
+                    +------+-------+
+                           |
+                    Tool Selection
+                           |
+                 +---------+---------+
+                 |                   |
+                 v                   v
+          +-------------+     +-------------+
+          | Calculator  |     |  Employee   |
+          |    Tool     |     | Information |
+          +-------------+     +-------------+
+                 |
+                 v
+          +-------------------------------+
+          |       Data & Memory Layer     |
+          |                               |
+          |  PostgreSQL   +    Redis      |
+          |  - Messages        - Cache    |
+          |  - Conversations              |
+          |  - Tool Calls                 |
+          +-------------------------------+
