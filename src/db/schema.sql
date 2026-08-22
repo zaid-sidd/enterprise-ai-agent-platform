@@ -1,0 +1,32 @@
+CREATE TABLE IF NOT EXISTS conversations (
+    id SERIAL PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE IF NOT EXISTS messages (
+    id SERIAL PRIMARY KEY,
+    conversation_id INTEGER NOT NULL
+        REFERENCES conversations(id)
+        ON DELETE CASCADE,
+
+    role VARCHAR(20) NOT NULL,
+    content TEXT NOT NULL,
+
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE IF NOT EXISTS tool_calls (
+    id SERIAL PRIMARY KEY,
+    conversation_id INTEGER NOT NULL
+        REFERENCES conversations(id)
+        ON DELETE CASCADE,
+
+    tool_name VARCHAR(100) NOT NULL,
+    arguments JSONB NOT NULL,
+    result JSONB,
+
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
